@@ -5,7 +5,7 @@ import 'stories/magic_alley.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Hide status bar and navigation bar (immersive full-screen)
+  // Hide status bar and navigation bar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   runApp(const MyApp());
