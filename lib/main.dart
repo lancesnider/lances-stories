@@ -5,6 +5,13 @@ import 'stories/magic_alley.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
+
   // Hide status bar and navigation bar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
@@ -22,6 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
+      showPerformanceOverlay: true, // <- top-right bars
       home: const MagicAlley(),
     );
   }
