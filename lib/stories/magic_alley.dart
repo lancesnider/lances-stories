@@ -92,35 +92,31 @@ class _MagicAlleyState extends State<MagicAlley> {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onDoubleTapDown: (_) {
-            // Calibrate: zero to current fused angles
             final a = _lastAngles;
             if (a != null) {
-              setState(() {
+              setState(() { // occasional rebuild only on calibration
                 _zeroPitch = a.x;
                 _zeroRoll  = a.z;
               });
             }
           },
           child: ParallaxTiltFused(
-            alpha: 0.95, // higher = snappier, lower = steadier
+            alpha: 0.95,
             samplingPeriod: const Duration(milliseconds: 10),
-            builder: (context, ang) {
-              // Keep last angles for calibration
+            onAngles: (ang) {
               _lastAngles = ang;
-
-              // ang.x ~ pitch (rad), ang.z ~ roll (rad)
               final pitch = ang.x - _zeroPitch;
               final roll  = ang.z - _zeroRoll;
 
+              // write directly to Rive — no setState
               parallaxX.value = pitch.clamp(-.3, .3);
-              parallaxY.value = roll.clamp(-.3,.3);
-
-              return RiveWidget(
-                controller: controller,
-                fit: Fit.layout,
-                layoutScaleFactor: .421,
-              );
+              parallaxY.value = roll.clamp(-.3, .3);
             },
+            child: RiveWidget( // static child, built once
+              controller: controller,
+              fit: Fit.layout,
+              layoutScaleFactor: .421,
+            ),
           ),
         );
       },

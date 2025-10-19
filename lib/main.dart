@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      showPerformanceOverlay: true, // <- top-right bars
+      // showPerformanceOverlay: true, // <- top-right bars
       home: const MagicAlley(),
     );
   }
