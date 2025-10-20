@@ -80,7 +80,6 @@ class _ParallaxTiltFusedState extends State<ParallaxTiltFused> {
       _roll  = a * _roll  + (1 - a) * _accRoll;
       _pitch = a * _pitch + (1 - a) * _accPitch;
 
-      // NO setState(): push values out to the parent
       widget.onAngles(TiltAngles(_pitch, 0.0, _roll));
     });
   }

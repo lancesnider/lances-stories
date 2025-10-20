@@ -110,7 +110,7 @@ class _MagicAlleyState extends State<MagicAlley> {
 
               // write directly to Rive — no setState
               parallaxX.value = pitch.clamp(-.3, .3);
-              parallaxY.value = roll.clamp(-.3, .3);
+              parallaxY.value = roll.clamp(.6, 1.2);
             },
             child: RiveWidget( // static child, built once
               controller: controller,
