@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'stories/magic_alley.dart';
+import 'pages/magic_alley.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Hide status bar and navigation bar (immersive full-screen)
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
+
+  // Hide status bar and navigation bar
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 
   runApp(const MyApp());
@@ -22,7 +29,34 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MagicAlley(),
+      // showPerformanceOverlay: true, // <- top-right bars
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/magic-alley': (context) => const MagicAlley(),
+      },
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Home')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, '/magic-alley'),
+              child: const Text('City Scene'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
