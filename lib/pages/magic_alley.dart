@@ -16,12 +16,16 @@ class _MagicAlleyState extends State<MagicAlley> {
 
   late ViewModelInstance viewModelInstance;
 
+  late ViewModelInstanceNumber sceneScaledWidth;
+  late ViewModelInstanceNumber sceneScaledHeight;
   late ViewModelInstanceNumber sceneWidth;
   late ViewModelInstanceNumber sceneHeight;
   late ViewModelInstanceNumber windowWidth;
   late ViewModelInstanceNumber windowHeight;
   late ViewModelInstanceNumber parallaxX;
   late ViewModelInstanceNumber parallaxY;
+  late ViewModelInstanceNumber scrollX;
+  late ViewModelInstanceNumber scrollY;
 
   Size? _lastSize;
 
@@ -29,6 +33,10 @@ class _MagicAlleyState extends State<MagicAlley> {
   double _zeroPitch = 0.0; // baseline for ang.x
   double _zeroRoll  = 0.0; // baseline for ang.z
   TiltAngles? _lastAngles;
+
+  double sceneAspectRatio = 1.3234336859;
+  double zoomedInHeight = 0.0;
+  double zoomedOutHeight = 0.0;
 
   @override
   void initState() {
@@ -56,19 +64,32 @@ class _MagicAlleyState extends State<MagicAlley> {
       return v;
     }
 
+    sceneScaledWidth = needNum('sceneScaledWidth');
+    sceneScaledHeight = needNum('sceneScaledHeight');
     sceneWidth  = needNum('sceneWidth');
     sceneHeight = needNum('sceneHeight');
     windowWidth = needNum('windowWidth');
     windowHeight = needNum('windowHeight');
     parallaxX   = needNum('parallaxX');
     parallaxY   = needNum('parallaxY');
+    scrollX   = needNum('scrollX');
+    scrollY   = needNum('scrollY');
+
+
+    // final sceneAspectRatio = sceneWidth.value / sceneHeight.value;sceneWidth.value
+    print(sceneWidth.value);
   }
 
   void _maybeUpdateSize(Size size) {
     if (_lastSize == size) return;
     _lastSize = size;
-    windowWidth.value = size.width;
-    windowHeight.value = size.height;
+    // windowWidth.value = size.width;
+    // windowHeight.value = size.height;
+    sceneScaledWidth.value = size.height * sceneAspectRatio * 1.5;
+    sceneScaledHeight.value = size.height * 1.5;
+
+    // scrollX.value = 0.5;
+    // scrollY.value = 0.5;
   }
 
   @override
@@ -103,7 +124,7 @@ class _MagicAlleyState extends State<MagicAlley> {
             child: RiveWidget( // static child, built once
               controller: controller,
               fit: Fit.layout,
-              layoutScaleFactor: .421,
+              layoutScaleFactor: 1,
             ),
           );
       },
