@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'stories/magic_alley.dart';
+import 'pages/magic_alley.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +30,33 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       // showPerformanceOverlay: true, // <- top-right bars
-      home: const MagicAlley(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/magic-alley': (context) => const MagicAlley(),
+      },
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Home')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, '/magic-alley'),
+              child: const Text('City Scene'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

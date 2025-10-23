@@ -89,18 +89,7 @@ class _MagicAlleyState extends State<MagicAlley> {
         final size = Size(constraints.maxWidth, constraints.maxHeight);
         _maybeUpdateSize(size);
 
-        return GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onDoubleTapDown: (_) {
-            final a = _lastAngles;
-            if (a != null) {
-              setState(() { // occasional rebuild only on calibration
-                _zeroPitch = a.x;
-                _zeroRoll  = a.z;
-              });
-            }
-          },
-          child: ParallaxTiltFused(
+        return ParallaxTiltFused(
             alpha: 0.95,
             samplingPeriod: const Duration(milliseconds: 10),
             onAngles: (ang) {
@@ -108,7 +97,6 @@ class _MagicAlleyState extends State<MagicAlley> {
               final pitch = ang.x - _zeroPitch;
               final roll  = ang.z - _zeroRoll;
 
-              // write directly to Rive — no setState
               parallaxX.value = pitch.clamp(-.3, .3);
               parallaxY.value = roll.clamp(.6, 1.2);
             },
@@ -117,8 +105,7 @@ class _MagicAlleyState extends State<MagicAlley> {
               fit: Fit.layout,
               layoutScaleFactor: .421,
             ),
-          ),
-        );
+          );
       },
     );
   }

@@ -15,15 +15,15 @@ class ParallaxTiltFused extends StatefulWidget {
     this.enabled = true,
     this.alpha = 0.95,
     this.samplingPeriod = const Duration(milliseconds: 10),
-    required this.onAngles,           // ← NEW: push updates out
-    this.child,                       // ← NEW: keep a static child (no rebuilds)
+    required this.onAngles,
+    this.child,
   });
 
   final bool enabled;
   final double alpha;
   final Duration samplingPeriod;
-  final void Function(TiltAngles angles) onAngles; // ← NEW
-  final Widget? child;                              // ← NEW
+  final void Function(TiltAngles angles) onAngles;
+  final Widget? child;
 
   @override
   State<ParallaxTiltFused> createState() => _ParallaxTiltFusedState();
